@@ -29,16 +29,8 @@ func (game *tennisGame1) GetScore() string {
 	)
 
 	if game.mScore1 == game.mScore2 {
-		switch game.mScore1 {
-		case 0:
-			score = "Love-All"
-		case 1:
-			score = "Fifteen-All"
-		case 2:
-			score = "Thirty-All"
-		default:
-			score = "Deuce"
-		}
+		score = tennisScoreEqual(game.mScore1)
+
 	} else if game.mScore1 >= 4 || game.mScore2 >= 4 {
 		minusResult := game.mScore1 - game.mScore2
 		switch {
@@ -54,7 +46,6 @@ func (game *tennisGame1) GetScore() string {
 		default:
 			score = "Win for player2"
 		}
-
 	} else {
 		for i := 1; i < 3; i++ {
 			if i == 1 {
@@ -78,4 +69,17 @@ func (game *tennisGame1) GetScore() string {
 	}
 
 	return score
+}
+
+func tennisScoreEqual(score int) string {
+	switch score {
+	case 0:
+		return "Love-All"
+	case 1:
+		return "Fifteen-All"
+	case 2:
+		return "Thirty-All"
+	default:
+		return "Deuce"
+	}
 }
