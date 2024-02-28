@@ -23,19 +23,15 @@ func (game *tennisGame1) WonPoint(playerName string) {
 }
 
 func (game *tennisGame1) GetScore() string {
-	var score string
-
 	if game.mScore1 == game.mScore2 {
-		score = tennisScoreEqual(game.mScore1)
+		return tennisScoreEqual(game.mScore1)
 
 	} else if game.mScore1 >= 4 || game.mScore2 >= 4 {
-		score = tennisScoreWithAdvantageOrWin(game.mScore1, game.mScore2)
+		return tennisScoreWithAdvantageOrWin(game.mScore1, game.mScore2)
 
 	} else {
-		score = getTennisScore(game.mScore1, game.mScore2)
+		return tennisScore(game.mScore1, game.mScore2)
 	}
-
-	return score
 }
 
 func tennisScoreEqual(score int) string {
@@ -71,7 +67,7 @@ func tennisScoreWithAdvantageOrWin(score1, score2 int) string {
 	}
 }
 
-func getTennisScore(score1, score2 int) string {
+func tennisScore(score1, score2 int) string {
 	var score string
 
 	for i := 1; i < 3; i++ {
@@ -81,17 +77,23 @@ func getTennisScore(score1, score2 int) string {
 			tempScore = score2
 		}
 
-		switch tempScore {
-		case 0:
-			score += "Love"
-		case 1:
-			score += "Fifteen"
-		case 2:
-			score += "Thirty"
-		case 3:
-			score += "Forty"
-		}
+		score += tennisScoreIncrement(tempScore)
 	}
 
 	return score
+}
+
+func tennisScoreIncrement(tempScore int) string {
+	switch tempScore {
+	case 0:
+		return "Love"
+	case 1:
+		return "Fifteen"
+	case 2:
+		return "Thirty"
+	case 3:
+		return "Forty"
+	default:
+		return ""
+	}
 }
